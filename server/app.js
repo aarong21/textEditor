@@ -8,6 +8,9 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
+const cors = require('cors');
+app.use(cors());
+
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/text-Editor');
 
