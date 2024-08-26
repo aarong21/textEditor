@@ -1,0 +1,10 @@
+// babel is used to configure Babel to transform JSX for Jest to understand React
+// there is jsx syntax in react components
+{
+    "presets": [
+        "@babel/preset-env",
+        "@babel/preset-react"
+        ]
+}
+// @babel/preset-env allows you to use the latest JavaScript features.
+// @babel/preset-react allows Babel to transform JSX syntax.
