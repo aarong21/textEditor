@@ -1,15 +1,18 @@
 const express = require('express');
 const http = require('http');
-const socketIo = require('socket.io');
 const mongoose = require('mongoose');
 const Document = require('./models/Documents');
-
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server);
 
 const cors = require('cors');
 app.use(cors());
+const io = require('socket.io')(3001, {
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"],
+    },
+});
 
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/text-Editor');
@@ -23,7 +26,11 @@ app.use(express.json());
 
 // Socket.io logic
 io.on('connection', (socket) => {
+    socket.on('send-changes', delta => {
+        socket.broadcast.emit("receive-changes", delta)
+    })
     console.log('New client connected');
+
 
     socket.on('disconnect', () => {
         console.log('Client disconnected');
